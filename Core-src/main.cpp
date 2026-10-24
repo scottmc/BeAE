@@ -191,6 +191,7 @@ void MyApplication::RefsReceived(BMessage *message)
 					
 					Pool.sample_memory = (float*)malloc(Pool.size * channels *4 +1024);
 #endif					
+					break;		// found the audio track, don't let other tracks (cover art) overwrite format
 				}else{
 					inFile.ReleaseAllTracks();
 				}
