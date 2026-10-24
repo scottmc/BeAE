@@ -87,7 +87,7 @@ void MyClipBoard::Init()
 
 	if (!m_clip){		// make sure the clip is invalid
 		MyClipBoardFile->Seek(0, SEEK_SET);
-		MyClipBoardFile->Write(&m_clip,sizeof(&m_clip));
+		MyClipBoardFile->Write(&m_clip,sizeof(m_clip));
 	}
    
 	if((clipSem = create_sem(1, "MyClipBoard Sem")) < 0){
@@ -137,12 +137,12 @@ bool MyClipBoard::Copy(){
 	MyClipBoardFile->Seek(0, SEEK_SET);
 
 	m_clip = true;
-	MyClipBoardFile->Write(&m_clip,sizeof(&m_clip));		// is clip valid ?
+	MyClipBoardFile->Write(&m_clip,sizeof(m_clip));		// is clip valid ?
 
-	MyClipBoardFile->Write(&size,sizeof(&size));
-	MyClipBoardFile->Write(&sample_type,sizeof(&sample_type));
-	MyClipBoardFile->Write(&Pool.frequency,sizeof(&Pool.frequency));
-	MyClipBoardFile->Write(&Pool.sample_bits,sizeof(&Pool.sample_bits));
+	MyClipBoardFile->Write(&size,sizeof(size));
+	MyClipBoardFile->Write(&sample_type,sizeof(sample_type));
+	MyClipBoardFile->Write(&Pool.frequency,sizeof(Pool.frequency));
+	MyClipBoardFile->Write(&Pool.sample_bits,sizeof(Pool.sample_bits));
 
 
 	if (Pool.sample_type==STEREO && Pool.selection!=BOTH){
@@ -331,14 +331,14 @@ void MyClipBoard::Paste(){
 	int32 sample_type, sample_bits;
 	float frequency;
 	
-	MyClipBoardFile->Read(&m_clip,sizeof(&m_clip));
+	MyClipBoardFile->Read(&m_clip,sizeof(m_clip));
 	if (!m_clip)	return;
 
 	Pool.mainWindow->PostMessage(TRANSPORT_STOP);		// can not use playing here
-	MyClipBoardFile->Read(&size,sizeof(&size));
-	MyClipBoardFile->Read(&sample_type,sizeof(&sample_type));
-	MyClipBoardFile->Read(&frequency,sizeof(&frequency));
-	MyClipBoardFile->Read(&sample_bits,sizeof(&Pool.sample_bits));
+	MyClipBoardFile->Read(&size,sizeof(size));
+	MyClipBoardFile->Read(&sample_type,sizeof(sample_type));
+	MyClipBoardFile->Read(&frequency,sizeof(frequency));
+	MyClipBoardFile->Read(&sample_bits,sizeof(sample_bits));
 
 	// enable paste in empty instance
 	if (Pool.size == 0)
@@ -449,8 +449,8 @@ void MyClipBoard::Paste(){
 			}
 			if (size){
 				for (int32 i=0; i<size; i+=8){
-					MyClipBoardFile->Read(&left, sizeof(&left));
-					MyClipBoardFile->Read(&right, sizeof(&right));
+					MyClipBoardFile->Read(&left, sizeof(left));
+					MyClipBoardFile->Read(&right, sizeof(right));
 					*p++ = (right+left)/2;
 				}
 			}
@@ -472,7 +472,7 @@ void MyClipBoard::Paste(){
 			}
 			if (size){
 				for (int32 i=0; i<size; i+=4){
-					MyClipBoardFile->Read(&left, sizeof(&left));
+					MyClipBoardFile->Read(&left, sizeof(left));
 					*p++ = left;
 					*p++ = left;
 				}
@@ -553,7 +553,7 @@ void MyClipBoard::Paste(){
 				}
 				if (size){
 					for (int32 i=0; i<size; i+=4){
-						MyClipBoardFile->Read(&left, sizeof(&left));
+						MyClipBoardFile->Read(&left, sizeof(left));
 						*p = left;
 						p += 2;
 					}
@@ -578,8 +578,8 @@ void MyClipBoard::Paste(){
 				}
 				if (size){
 					for (int32 i=0; i<size; i+=8){
-						MyClipBoardFile->Read(&left, sizeof(&left));
-						MyClipBoardFile->Read(&right, sizeof(&right));
+						MyClipBoardFile->Read(&left, sizeof(left));
+						MyClipBoardFile->Read(&right, sizeof(right));
 						*p = (right+left)/2;
 						p += 2;
 					}
@@ -607,7 +607,7 @@ void MyClipBoard::Paste(){
 				float left;
 				while(size>=BLOCK_SIZE2){
 					for (int32 i=0; i<BLOCK_SIZE2; i+=4){
-						MyClipBoardFile->Read(&left, sizeof(&left));
+						MyClipBoardFile->Read(&left, sizeof(left));
 						*p = left;
 						p += 2;
 					}
@@ -616,7 +616,7 @@ void MyClipBoard::Paste(){
 				}
 				if (size){
 					for (int32 i=0; i<size; i+=4){
-						MyClipBoardFile->Read(&left, sizeof(&left));
+						MyClipBoardFile->Read(&left, sizeof(left));
 						*p = left;
 						p += 2;
 					}
@@ -628,8 +628,8 @@ void MyClipBoard::Paste(){
 				float left, right;
 				while(size>=BLOCK_SIZE2){
 					for (int32 i=0; i<BLOCK_SIZE2; i+=8){
-						MyClipBoardFile->Read(&left, sizeof(&left));
-						MyClipBoardFile->Read(&right, sizeof(&right));
+						MyClipBoardFile->Read(&left, sizeof(left));
+						MyClipBoardFile->Read(&right, sizeof(right));
 						*p = (right+left)/2;
 						p += 2;
 					}
@@ -638,8 +638,8 @@ void MyClipBoard::Paste(){
 				}
 				if (size){
 					for (int32 i=0; i<size; i+=8){
-						MyClipBoardFile->Read(&left, sizeof(&left));
-						MyClipBoardFile->Read(&right, sizeof(&right));
+						MyClipBoardFile->Read(&left, sizeof(left));
+						MyClipBoardFile->Read(&right, sizeof(right));
 						*p = (right+left)/2;
 						p += 2;
 					}
@@ -677,7 +677,7 @@ void MyClipBoard::PasteMix(){
 *******************************************************/
 bool MyClipBoard::HasClip(){
 	MyClipBoardFile->Seek(0, SEEK_SET);
-	MyClipBoardFile->Read(&m_clip,sizeof(&m_clip));
+	MyClipBoardFile->Read(&m_clip,sizeof(m_clip));
 
 	return m_clip;
 }
@@ -688,7 +688,7 @@ bool MyClipBoard::HasClip(){
 void MyClipBoard::Reset(){
 	m_clip = false;
 	MyClipBoardFile->Seek(0, SEEK_SET);
-	MyClipBoardFile->Write(&m_clip,sizeof(&m_clip));
+	MyClipBoardFile->Write(&m_clip,sizeof(m_clip));
 }
 
 /*******************************************************
