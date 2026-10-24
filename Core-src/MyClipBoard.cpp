@@ -702,7 +702,7 @@ void MyClipBoard::Update(){
 	be_roster->GetAppList(info.signature, teams);	// get a list of all apps with the same signature
 	for (int i=0; i<teams->CountItems(); i++)
 	{
-		team_id who = (team_id)teams->ItemAt(i);
+		team_id who = (team_id)(addr_t)teams->ItemAt(i);
 		BMessenger app(NULL, who);
 		app.SendMessage(UPDATE_MENU);
 	}

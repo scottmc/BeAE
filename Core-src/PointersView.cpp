@@ -29,6 +29,7 @@
 #include <TranslationKit.h>
 #include <Bitmap.h>
 #include <stdio.h>
+#include <stdlib.h>
 
 #include "Globals.h"
 #include "PointersView.h"
@@ -88,10 +89,10 @@ void EntryView::SetPointer( int64 p)
 
 void EntryView::ConvertToPointer()
 {
-	int64 p;
+	int64 p = 0;
 	// create text
 	if (Prefs.display_time == DISPLAY_SAMPLES){
-		sscanf(Text(), "%Ld", &p);
+		p = strtoll(Text(), NULL, 10);
 	}else
 	if (Prefs.display_time == DISPLAY_TIME){
 		char t[255], s[255];
